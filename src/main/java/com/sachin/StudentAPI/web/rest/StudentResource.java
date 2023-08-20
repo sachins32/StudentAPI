@@ -38,4 +38,20 @@ public class StudentResource {
         Optional<Student> student = studentService.findById(id);
         return student.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PutMapping("/student")
+    public ResponseEntity<?> updateStudent(@RequestBody Student student) {
+        if (studentService.existsById(student.getId()))
+            return new ResponseEntity<>(studentService.save(student), HttpStatus.OK);
+        else return new ResponseEntity<>("Student Not Found", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/student/{id}")
+    public ResponseEntity<Student> deleteStudent(@PathVariable int id) {
+        if (studentService.existsById(id)) {
+            studentService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

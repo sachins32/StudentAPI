@@ -29,4 +29,12 @@ public class StudentService {
     public Optional<Student> findById(int id) {
         return studentRepository.findById(id);
     }
+
+    public boolean existsById(int id) {
+        return studentRepository.existsById(id);
+    }
+
+    public void deleteById(int id) {
+        studentRepository.deleteById(id);
+    }
 }
